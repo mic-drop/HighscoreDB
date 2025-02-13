@@ -3,8 +3,9 @@
     <!--persistence unit name-->
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
 
-     <class>org.micdrop.highscore.model.Game</class>
-     <class>org.micdrop.highscore.model.Player</class>
+        <class>org.micdrop.highscore.model.Game</class>
+        <class>org.micdrop.highscore.model.Player</class>
+        <class>org.micdrop.highscore.model.Score</class>
 
 
         <properties>

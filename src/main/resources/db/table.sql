@@ -1,22 +1,26 @@
-CREATE TABLE Game (
-    game_id INT PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each game
-    game_name VARCHAR(255) NOT NULL  -- Name of the game
+CREATE TABLE Game
+(
+    id        INT PRIMARY KEY AUTO_INCREMENT, -- Unique identifier for each game
+    game_name VARCHAR(255) NOT NULL           -- Name of the game
 );
 
-CREATE TABLE Player (
-    player_id INT PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each player
-    player_name VARCHAR(255) NOT NULL,  -- Name of the player
-    game_id INT,  -- Foreign key to the Game table
-    FOREIGN KEY (game_id) REFERENCES Game(game_id),
-    CONSTRAINT unique_player_game UNIQUE (player_name, game_id)  -- Prevent duplicate player names in the same game
+CREATE TABLE Player
+(
+    id          INT PRIMARY KEY AUTO_INCREMENT,
+    player_name VARCHAR(255) NOT NULL,
+    game_id     INT          NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES Game (id),
+    CONSTRAINT unique_player_game UNIQUE (player_name, game_id)
 );
 
-CREATE TABLE Score (
-    score_id INT PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each score entry
-    game_id INT,  -- Foreign key to the Game table
-    player_name VARCHAR(255),  -- Name of the player (could be a foreign key, but for this example, it's kept as a simple reference)
-    score INT,  -- Player's score in the game
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Timestamp of when the score was recorded
-    FOREIGN KEY (game_id) REFERENCES Game(game_id),
-    CONSTRAINT unique_score UNIQUE (player_name, game_id, date)  -- Prevent duplicate scores for the same player in the same game on the same day
+CREATE TABLE Score
+(
+    id        INT PRIMARY KEY AUTO_INCREMENT,
+    player_id INT NOT NULL,
+    game_id   INT NOT NULL,
+    score     INT NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (player_id) REFERENCES Player (id),
+    FOREIGN KEY (game_id) REFERENCES Game (id),
+    CONSTRAINT unique_score UNIQUE (player_id, game_id, score, date)
 );

@@ -3,7 +3,7 @@ package org.micdrop.highscore.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Player")
+@Table(name = "Player", uniqueConstraints = @UniqueConstraint(columnNames = {"player_name", "game_id"}))
 public class Player extends AbstractModel{
 
 
