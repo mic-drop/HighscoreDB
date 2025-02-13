@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+    <!--persistence unit name-->
+    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+
+        <description>
+            Persistence Unit for Java Bank production environment
+        </description>
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/jpa?useSSL=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="miguelsaraiva"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <!-- this property tells hibernate what to scan for annotation,
+            no value means it will only look at the classes defined above -->
+            <property name="hibernate.archive.autodetection" value=""/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+        </properties>
+    </persistence-unit>
+</persistence>
