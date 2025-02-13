@@ -1,5 +1,5 @@
 CREATE TABLE Game (
-    game_id INT PRIMARY KEY,  -- Unique identifier for each game
+    game_id INT PRIMARY KEY AUTO_INCREMENT,  -- Unique identifier for each game
     game_name VARCHAR(255) NOT NULL  -- Name of the game
 );
 

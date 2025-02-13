@@ -1,26 +1,27 @@
 package org.micdrop.highscore;
 
+import org.micdrop.highscore.model.Game;
+import org.micdrop.highscore.model.Player;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class Main {
     public static void main(String[] args) {
-        // Use the test persistence unit to configure a new
-// entity manager factory and start up JPA
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+      Player player = new Player();
+      EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+      EntityManager em = emf.createEntityManager();
 
-// Open a new database connection by getting a new
-// entity manager from the entity manager factory
-        EntityManager em = emf.createEntityManager();
 
-// Used to test the database connection, should return 2
-        System.out.println("Result: " + em.createNativeQuery("select 1 + 1").getSingleResult());
+      player.setPlayerName("Mic Drop");
 
-// Close the database connection
-        em.close();
+      player.setGame(em.find(Game.class, 1));
 
-// Shutdown JPA
-        emf.close();
+      em.getTransaction().begin();
+      em.persist(player);
+      em.getTransaction().commit();
+      em.close();
+      emf.close();
     }
 }
