@@ -5,7 +5,7 @@
 
         <class>org.micdrop.highscore.model.Game</class>
         <class>org.micdrop.highscore.model.Player</class>
-<!--        <class>org.micdrop.highscore.model.Score</class>-->
+        <class>org.micdrop.highscore.model.Score</class>
 
 
         <properties>
