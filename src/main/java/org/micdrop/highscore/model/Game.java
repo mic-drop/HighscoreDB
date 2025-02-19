@@ -3,23 +3,23 @@ package org.micdrop.highscore.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Game")
+@Table(name = "game")
 public class Game extends AbstractModel{
 
+    @Column(name = "game_name", unique = true, nullable = false, length = 191)
+    private String gameName;
 
-    private String game_name;
-
-    public String getGame_name() {
-        return game_name;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setGame_name(String game_name) {
-        this.game_name = game_name;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
 
     @Override
     public String toString() {
-        return "Game [game_id=" + super.id + ", game_name=" + game_name + "]";
+        return "Game [game_id=" + super.id + ", game_name=" + gameName + "]";
     }
 }

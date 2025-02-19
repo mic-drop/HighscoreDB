@@ -3,9 +3,9 @@ package org.micdrop.highscore.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "Score",
-uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "game_id", "score", "date"}))
+////@Entity
+////@Table(name = "score",
+//uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "game_id", "score", "date"}))
 public class Score extends AbstractModel{
     @ManyToOne
     @JoinColumn(name = "player_id", referencedColumnName = "id", nullable = false,
@@ -74,7 +74,7 @@ public class Score extends AbstractModel{
         return "Score{" +
                 "id=" + id +
                 ", player=" + player.getPlayerName() +
-                ", game=" + game.getGame_name() +
+                ", game=" + game.getGameName() +
                 ", score=" + score +
                 ", date=" + date +
                 '}';

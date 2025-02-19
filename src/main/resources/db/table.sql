@@ -1,16 +1,13 @@
-CREATE TABLE Game
+CREATE TABLE game
 (
-    id        INT PRIMARY KEY AUTO_INCREMENT, -- Unique identifier for each game
-    game_name VARCHAR(255) NOT NULL           -- Name of the game
+    id        INT PRIMARY KEY AUTO_INCREMENT,
+    game_name VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Player
+CREATE TABLE player
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    player_name VARCHAR(255) NOT NULL,
-    game_id     INT          NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES Game (id),
-    CONSTRAINT unique_player_game UNIQUE (player_name, game_id)
+    player_name VARCHAR(255) UNIQUE NOT NULL,
 );
 
 CREATE TABLE Score

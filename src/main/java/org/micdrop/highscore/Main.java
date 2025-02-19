@@ -14,15 +14,15 @@ public class Main {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
         EntityManager em = emf.createEntityManager();
-        Score score = new Score();
-        score.setGame(em.find(Game.class, 1));
-        score.setPlayer(em.find(Player.class, 1));
-        score.setScore(800);
-        score.setDate(LocalDateTime.now());
 
+       Game wordle = new Game();
+       wordle.setGameName("Super Mario");
+
+//        Player mic = new Player();
+//        mic.setPlayerName("Mic");
         try {
             em.getTransaction().begin();
-            em.persist(score);
+            em.persist(wordle);
             em.getTransaction().commit();
 
         } catch (Exception e) {

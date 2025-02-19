@@ -5,7 +5,7 @@
 
         <class>org.micdrop.highscore.model.Game</class>
         <class>org.micdrop.highscore.model.Player</class>
-        <class>org.micdrop.highscore.model.Score</class>
+<!--        <class>org.micdrop.highscore.model.Score</class>-->
 
 
         <properties>
@@ -20,7 +20,12 @@
             <property name="hibernate.archive.autodetection" value=""/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!-- Import SQL file -->
+            <property name="hibernate.hbm2ddl.import_files" value="db/data.sql"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
