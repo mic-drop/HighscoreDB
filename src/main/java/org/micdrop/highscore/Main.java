@@ -1,38 +1,28 @@
 package org.micdrop.highscore;
 
 import org.micdrop.highscore.model.Game;
-import org.micdrop.highscore.model.Player;
-import org.micdrop.highscore.model.Score;
+import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.time.LocalDateTime;
+import javax.persistence.PersistenceException;
+import java.util.Arrays;
 
 public class Main {
+
     public static void main(String[] args) {
+        GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+        ctx.getEnvironment().setActiveProfiles("dev");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
-        EntityManager em = emf.createEntityManager();
+        ctx.load("/spring/spring-config.xml");
+        ctx.refresh();
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("/spring/spring-config.xml");
+        JpaTransactionManager tx = ctx.getBean("transactionManager", JpaTransactionManager.class);
+        Game eldenRing = ctx.getBean("eldenRing", Game.class);
+        System.out.println(eldenRing.getGameName());
 
-        //Bean has no id so hibernate recognizes it as new object and not detached
-        Game eldenRing = context.getBean("elden ring", Game.class);
 
-        try {
-            em.getTransaction().begin();
-            em.persist(eldenRing);
-            em.getTransaction().commit();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-            emf.close();
-        }
     }
+
 }
+
