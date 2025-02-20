@@ -20,6 +20,8 @@ public class Main {
         JpaTransactionManager tx = ctx.getBean("transactionManager", JpaTransactionManager.class);
         Game eldenRing = ctx.getBean("eldenRing", Game.class);
         System.out.println(eldenRing.getGameName());
+        tx.beginRead();
+        tx.rollback();
 
 
     }
