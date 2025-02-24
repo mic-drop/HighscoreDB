@@ -33,13 +33,6 @@ public class Main {
         } finally {
             sm.stopSession();
         }
-        while (true)
-        {
-
-        }
-
-
-
     }
 
 }
