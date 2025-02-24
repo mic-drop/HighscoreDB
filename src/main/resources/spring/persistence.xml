@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
        profile="dev">
 
+
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="locations" value="classpath:highscore.properties"/>
     </bean>
@@ -19,7 +20,7 @@
     <bean id="emFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="org.micdrop.highscore.persistence"/>
+        <property name="packagesToScan" value="org.micdrop.highscore"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
@@ -30,19 +31,12 @@
                 <entry key="hibernate.hbm2ddl.auto" value="${dev.schema.auto}"/>
 
                 <!-- Insert test data if dev.schema.auto property set to create -->
-                <entry key="hibernate.hbm2ddl.import_files" value="db/test-data.sql"/>
+                <entry key="hibernate.hbm2ddl.import_files" value="db/data.sql"/>
                 <entry key="hibernate.hbm2ddl.import_files_sql_extractor"
                        value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor"/>
             </map>
         </property>
     </bean>
 
-    <bean id="sessionManager" class="org.micdrop.highscore.persistence.JpaSessionManager">
-        <property name="emf" ref="emFactory"/>
-    </bean>
-
-    <bean id="transactionManager" class="org.micdrop.highscore.persistence.JpaTransactionManager">
-        <property name="sm" ref="sessionManager"/>
-    </bean>
 
 </beans>

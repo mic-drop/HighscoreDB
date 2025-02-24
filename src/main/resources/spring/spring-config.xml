@@ -3,7 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="persistence.xml"/>
+    <import resource="./prod-persistence.xml"/>
+    <bean id="sessionManager" class="org.micdrop.highscore.persistence.JpaSessionManager">
+        <property name="emf" ref="emFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.micdrop.highscore.persistence.JpaTransactionManager">
+        <property name="sm" ref="sessionManager"/>
+    </bean>
 
     <bean id="eldenRing" class="org.micdrop.highscore.model.Game">
         <property name="gameName" value="Elden Ring"/>
