@@ -50,7 +50,7 @@
                        value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor"/>
 
                 <!-- Validate database schema, data loss can occur if set to create or update -->
-                <entry key="hibernate.hbm2ddl.auto" value="create"/>
+                <entry key="hibernate.hbm2ddl.auto" value="update"/>
             </map>
         </property>
     </bean>
