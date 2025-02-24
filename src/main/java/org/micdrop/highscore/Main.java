@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-        ctx.getEnvironment().setActiveProfiles("prod");
+        ctx.getEnvironment().setActiveProfiles("dev");
 
         ctx.load("/spring/spring-config.xml");
         ctx.refresh();

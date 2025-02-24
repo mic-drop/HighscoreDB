@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="./prod-persistence.xml"/>
+    <import resource="./dev-persistence.xml"/>
+    
     <bean id="sessionManager" class="org.micdrop.highscore.persistence.JpaSessionManager">
         <property name="emf" ref="emFactory"/>
     </bean>
