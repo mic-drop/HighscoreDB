@@ -9,11 +9,6 @@ public class JpaSessionManager {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    /**
-     * Sets the entity manager factory
-     *
-     * @param emf the entity manager factory to set
-     */
     public void setEmf(EntityManagerFactory emf) {
         this.emf = emf;
     }

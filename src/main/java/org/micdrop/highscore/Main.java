@@ -1,8 +1,11 @@
 package org.micdrop.highscore;
 
+import org.micdrop.highscore.dao.jpa.PlayerDAO;
 import org.micdrop.highscore.model.Game;
+import org.micdrop.highscore.model.Player;
 import org.micdrop.highscore.persistence.JpaSessionManager;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
+import org.micdrop.highscore.service.PlayerService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -20,14 +23,16 @@ public class Main {
         ctx.refresh();
 
         JpaSessionManager sm = ctx.getBean("sessionManager", JpaSessionManager.class);
-        Game eldenRing = ctx.getBean("eldenRing", Game.class);
-        System.out.println(eldenRing.getGameName());
-        try {
-            EntityManager em = sm.getCurrentSession();
-            em.getTransaction().begin();
-            em.merge(eldenRing);
-            em.getTransaction().commit();
+        JpaTransactionManager tm = ctx.getBean("transactionManager", JpaTransactionManager.class);
+        PlayerService playerService = new PlayerService();
+        PlayerDAO playerDAO = new PlayerDAO(sm);
+        playerService.setPlayerDAO(playerDAO);
+        playerService.setTx(tm);
 
+
+        try {
+            Player player = playerService.getPlayer(1);
+            System.out.println(player.getPlayerName());
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         } finally {
