@@ -43,12 +43,8 @@ public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
     }
 
     @Override
-    public T saveOrUpdate(T model) {
-        try {
-            return sm.getCurrentSession().merge(model);
-        } catch (PersistenceException e) {
-            throw e;
-        }
+    public T saveOrUpdate(T model) throws PersistenceException {
+        return sm.getCurrentSession().merge(model);
     }
 
     @Override

@@ -1,17 +1,10 @@
 package org.micdrop.highscore;
 
-import org.micdrop.highscore.dao.jpa.PlayerDAO;
-import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.model.Player;
-import org.micdrop.highscore.persistence.JpaSessionManager;
-import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.micdrop.highscore.service.PlayerService;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-import java.util.Arrays;
 
 public class Main {
 

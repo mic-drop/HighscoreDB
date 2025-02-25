@@ -15,8 +15,15 @@
         <property name="sm" ref="sessionManager"/>
     </bean>
 
-    <bean id="playerDao" class="org.micdrop.highscore.dao.jpa.PlayerDAO">
+    <bean id="playerDao" class="org.micdrop.highscore.dao.jpa.JpaPlayerDao">
         <property name="sm" ref="sessionManager"/>
     </bean>
 
+    <bean id="gameDao" class="org.micdrop.highscore.dao.jpa.JpaGameDao">
+        <property name="sm" ref="sessionManager"/>
+    </bean>
+
+    <bean id="scoreDao" class="org.micdrop.highscore.dao.jpa.JpaScoreDao">
+        <property name="sm" ref="sessionManager"/>
+    </bean>
 </beans>

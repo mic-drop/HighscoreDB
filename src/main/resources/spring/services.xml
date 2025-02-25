@@ -5,7 +5,7 @@
 
     <bean id="playerService" class="org.micdrop.highscore.service.PlayerService">
         <property name="tx" ref="transactionManager"/>
-        <property name="PlayerDAO" ref="playerDao"/>
+        <property name="jpaPlayerDao" ref="playerDao"/>
     </bean>
 
 </beans>
