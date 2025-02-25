@@ -12,8 +12,23 @@ public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
     protected Class<T> modelType;
     protected JpaSessionManager sm;
 
-    public JpaDao(Class<T> modelType, JpaSessionManager sm) {
+    public JpaDao(Class<T> modelType) {
         this.modelType = modelType;
+    }
+
+    public Class<T> getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(Class<T> modelType) {
+        this.modelType = modelType;
+    }
+
+    public JpaSessionManager getSm() {
+        return sm;
+    }
+
+    public void setSm(JpaSessionManager sm) {
         this.sm = sm;
     }
 

@@ -3,12 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:highscore.properties"/>
+    <bean id="playerService" class="org.micdrop.highscore.service.PlayerService">
+        <property name="tx" ref="transactionManager"/>
+        <property name="PlayerDAO" ref="playerDao"/>
     </bean>
-
-    <import resource="persistence.xml"/>
-    <import resource="services.xml"/>
-
 
 </beans>

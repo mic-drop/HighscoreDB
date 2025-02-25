@@ -22,12 +22,7 @@ public class Main {
         ctx.load("/spring/spring-config.xml");
         ctx.refresh();
 
-        JpaSessionManager sm = ctx.getBean("sessionManager", JpaSessionManager.class);
-        JpaTransactionManager tm = ctx.getBean("transactionManager", JpaTransactionManager.class);
-        PlayerService playerService = new PlayerService();
-        PlayerDAO playerDAO = new PlayerDAO(sm);
-        playerService.setPlayerDAO(playerDAO);
-        playerService.setTx(tm);
+        PlayerService playerService = ctx.getBean("playerService", PlayerService.class);
 
 
         try {
@@ -35,8 +30,6 @@ public class Main {
             System.out.println(player.getPlayerName());
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        } finally {
-            sm.stopSession();
         }
     }
 

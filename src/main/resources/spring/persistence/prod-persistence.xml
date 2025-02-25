@@ -7,10 +7,7 @@
     <!-- Enable support for JPA annotations -->
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="classpath:highscore.properties"/>
-    </bean>
-    <!-- c3p0 database connection pool management -->
+    t <!-- c3p0 database connection pool management -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
