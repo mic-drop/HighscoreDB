@@ -37,8 +37,8 @@ public class PlayerService {
     public Player getPlayer(Integer id) {
         try {
             tx.beginRead();
-            Player player  = jpaPlayerDao.findById(id);
-            return Optional.ofNullable(player).orElseThrow(() ->new IllegalArgumentException(("player not found")));
+            Player player = jpaPlayerDao.findById(id);
+            return Optional.ofNullable(player).orElseThrow(() -> new IllegalArgumentException(("player not found")));
         } finally {
             tx.commit();
         }
@@ -48,9 +48,22 @@ public class PlayerService {
         try {
             tx.beginRead();
             Player player = jpaPlayerDao.findByName(name);
-            return Optional.ofNullable(player).orElseThrow(() ->new IllegalArgumentException("player name not found"));
+            return Optional.ofNullable(player).orElseThrow(() -> new IllegalArgumentException("player name not found"));
         } finally {
             tx.commit();
+        }
+    }
+
+    public boolean remove(Integer id) {
+        try {
+            tx.beginWrite();
+            jpaPlayerDao.delete(id);
+            tx.commit();
+            return true;
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            tx.rollback();
+            return false;
         }
     }
 }
