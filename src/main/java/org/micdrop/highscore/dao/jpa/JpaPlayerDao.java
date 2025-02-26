@@ -19,7 +19,7 @@ public class JpaPlayerDao extends JpaDao<Player> {
         Root<Player> root = query.from(Player.class);
 
         query.select(root)
-                .where(builder.equal(root.get("player_name"), name));
+                .where(builder.equal(root.get("playerName"), name));
 
         return sm.getCurrentSession().createQuery(query).getSingleResult();
     }

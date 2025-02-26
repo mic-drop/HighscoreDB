@@ -21,6 +21,9 @@ public class Main {
         try {
             Player player = playerService.getPlayer(1);
             System.out.println(player.getPlayerName());
+            player = playerService.getPlayerByName("Drop");
+            System.out.println(player.getId());
+            playerService.addPlayer("Marika");
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         }
