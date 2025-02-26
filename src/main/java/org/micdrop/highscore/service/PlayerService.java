@@ -38,7 +38,7 @@ public class PlayerService {
         try {
             tx.beginRead();
             Player player = jpaPlayerDao.findById(id);
-            return Optional.ofNullable(player).orElseThrow(() -> new IllegalArgumentException(("player not found")));
+            return Optional.ofNullable(player).orElseThrow(() -> new IllegalArgumentException("player not found"));
         } finally {
             tx.commit();
         }

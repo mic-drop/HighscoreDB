@@ -8,4 +8,9 @@
         <property name="jpaPlayerDao" ref="playerDao"/>
     </bean>
 
+    <bean id="gameService" class="org.micdrop.highscore.service.GameService">
+        <property name="tx" ref="transactionManager"/>
+        <property name="jpaGameDao" ref="gameDao"/>
+    </bean>
+
 </beans>
