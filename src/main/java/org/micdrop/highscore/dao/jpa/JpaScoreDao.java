@@ -7,4 +7,6 @@ public class JpaScoreDao extends JpaDao<Score>{
     public JpaScoreDao() {
         super(Score.class);
     }
+
+
 }

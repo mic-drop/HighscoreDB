@@ -1,10 +1,12 @@
 package org.micdrop.highscore;
 
 import org.micdrop.highscore.model.Player;
+import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.service.PlayerService;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 public class Main {
 
@@ -20,11 +22,13 @@ public class Main {
 
         try {
             Player player = playerService.getPlayer(1);
-            System.out.println(player.getPlayerName());
-            player = playerService.getPlayerByName("Drop");
-            System.out.println(player.getId());
-            playerService.addPlayer("Marika");
-           playerService.remove(2);
+            List<Score> scores = player.getScores();
+            for(Score score : scores)
+            {
+                System.out.println(score.getDate());
+            }
+            playerService.remove(1);
+
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         }

@@ -1,20 +1,26 @@
 package org.micdrop.highscore.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "score",
-uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "game_id", "score", "date"}))
-public class Score extends AbstractModel{
+        uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "game_id", "score", "date"}))
+public class Score extends AbstractModel {
+
     @ManyToOne
     @JoinColumn(name = "player_id", referencedColumnName = "id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_score_player"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Player player;
 
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_score_game"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Game game;
 
     @Column(nullable = false)
@@ -23,9 +29,7 @@ public class Score extends AbstractModel{
     @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime date;
 
-    // Constructors
-    public Score() {
-    }
+    public Score() {}
 
     public Score(Player player, Game game, Integer score, LocalDateTime date) {
         this.player = player;
@@ -33,8 +37,6 @@ public class Score extends AbstractModel{
         this.score = score;
         this.date = date;
     }
-
-    // Getters and Setters
 
     public Player getPlayer() {
         return player;
@@ -68,7 +70,6 @@ public class Score extends AbstractModel{
         this.date = date;
     }
 
-    // toString
     @Override
     public String toString() {
         return "Score{" +
