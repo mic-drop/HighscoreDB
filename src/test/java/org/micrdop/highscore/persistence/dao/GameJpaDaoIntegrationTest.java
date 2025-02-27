@@ -72,7 +72,16 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         Assert.assertNotNull(testGame.getId());
         Assert.assertEquals(3, testGame.getId().intValue());
         Assert.assertEquals("Elden Wing", testGame.getGameName());
+    }
 
+    @Test
+    public void delete(){
+       int id = 1;
 
+       tx.beginWrite();
+       jpaGameDao.delete(id);
+       tx.commit();
+
+       Assert.assertNull("game should be null",sm.getCurrentSession().find(Game.class, 1));
     }
 }

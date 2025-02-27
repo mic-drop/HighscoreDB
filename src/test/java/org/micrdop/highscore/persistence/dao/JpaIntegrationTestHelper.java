@@ -33,6 +33,7 @@ public class JpaIntegrationTestHelper {
         sm.setEmf(emf);
         tx.setSm(sm);
 
+        System.out.println("Hey");
         tx.beginRead();
     }
 
