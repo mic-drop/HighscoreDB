@@ -11,7 +11,7 @@ public class GameService {
     private JpaTransactionManager tx;
     private JpaGameDao jpaGameDao;
 
-    public Game getPlayer(Integer id){
+    public Game getGame(Integer id){
         try {
             tx.beginRead();
             Game game = jpaGameDao.findById(id);
