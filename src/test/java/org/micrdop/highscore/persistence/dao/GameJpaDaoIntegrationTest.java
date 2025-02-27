@@ -82,6 +82,6 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
        jpaGameDao.delete(id);
        tx.commit();
 
-       Assert.assertNull("game should be null",sm.getCurrentSession().find(Game.class, 1));
+       Assert.assertNull("game should be null",sm.getCurrentSession().find(Game.class, id));
     }
 }

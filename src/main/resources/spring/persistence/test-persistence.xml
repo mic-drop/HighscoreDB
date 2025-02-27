@@ -33,7 +33,7 @@
 
                 <!-- Create database schema and populate with test data -->
                 <entry key="hibernate.hbm2ddl.auto" value="create"/>
-                <entry key="hibernate.hbm2ddl.import_files" value="db/data.sql"/>
+                <entry key="hibernate.hbm2ddl.import_files" value="db/test-data.sql"/>
                 <entry key="hibernate.hbm2ddl.import_files_sql_extractor"
                        value="org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor"/>
 
