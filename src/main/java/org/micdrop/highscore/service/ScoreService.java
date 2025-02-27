@@ -9,6 +9,7 @@ import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
 
 import javax.persistence.PersistenceException;
+import java.util.Optional;
 
 public class ScoreService {
 
@@ -17,6 +18,19 @@ public class ScoreService {
     private JpaGameDao jpaGameDao;
 
     private JpaTransactionManager tx;
+
+    public Score get(Integer id){
+
+        try {
+            tx.beginRead();
+            Score score = jpaScoreDao.findById(id);
+
+            return Optional.ofNullable(score).orElseThrow(() -> new IllegalArgumentException("score not found"));
+        } finally {
+            tx.commit();
+        }
+    }
+
 
     public void addScore(int scoreValue, String username, String gameName) {
 
@@ -44,9 +58,16 @@ public class ScoreService {
 
     }
 
-
     public void setJpaScoreDao(JpaScoreDao jpaScoreDao) {
         this.jpaScoreDao = jpaScoreDao;
+    }
+
+    public void setJpaPlayerDao(JpaPlayerDao jpaPlayerDao) {
+        this.jpaPlayerDao = jpaPlayerDao;
+    }
+
+    public void setJpaGameDao(JpaGameDao jpaGameDao) {
+        this.jpaGameDao = jpaGameDao;
     }
 
     public void setTx(JpaTransactionManager tx) {

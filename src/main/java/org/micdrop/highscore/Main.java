@@ -3,6 +3,7 @@ package org.micdrop.highscore;
 import org.micdrop.highscore.model.Player;
 import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.service.PlayerService;
+import org.micdrop.highscore.service.ScoreService;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import javax.persistence.PersistenceException;
@@ -17,18 +18,12 @@ public class Main {
         ctx.load("/spring/spring-config.xml");
         ctx.refresh();
 
-        PlayerService playerService = ctx.getBean("playerService", PlayerService.class);
+        ScoreService scoreService = ctx.getBean("scoreService", ScoreService.class);
 
 
         try {
-            Player player = playerService.getPlayer(1);
-            List<Score> scores = player.getScores();
-            for(Score score : scores)
-            {
-                System.out.println(score.getDate());
-            }
-            playerService.remove(1);
-
+            Score score = scoreService.get(1);
+            System.out.println(score.getDate());
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         }

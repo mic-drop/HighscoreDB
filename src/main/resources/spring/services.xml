@@ -13,4 +13,11 @@
         <property name="jpaGameDao" ref="gameDao"/>
     </bean>
 
+    <bean id="scoreService" class="org.micdrop.highscore.service.ScoreService">
+        <property name="tx" ref="transactionManager"/>
+        <property name="jpaGameDao" ref="gameDao"/>
+        <property name="jpaPlayerDao" ref="playerDao"/>
+        <property name="jpaScoreDao" ref="scoreDao"/>
+    </bean>
+
 </beans>
