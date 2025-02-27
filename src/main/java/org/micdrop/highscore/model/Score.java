@@ -31,11 +31,11 @@ public class Score extends AbstractModel {
 
     public Score() {}
 
-    public Score(Player player, Game game, Integer score, LocalDateTime date) {
+    public Score(Player player, Game game, Integer score) {
         this.player = player;
         this.game = game;
         this.score = score;
-        this.date = date;
+        this.date = LocalDateTime.now();
     }
 
     public Player getPlayer() {
