@@ -47,11 +47,15 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
 
     @Test
     public void findAll(){
+
         List<Player> testList;
+        //Change this value according to resources/db/test-data.sql
+        int playerSeeds = 3;
 
         testList = jpaPlayerDao.findAll();
 
         Assert.assertFalse(testList.isEmpty());
+        Assert.assertEquals(playerSeeds, testList.size());
         Assert.assertEquals(1, testList.get(0).getId().intValue());
         Assert.assertEquals("Mic", testList.get(0).getPlayerName());
         Assert.assertEquals(2, testList.get(1).getId().intValue());
