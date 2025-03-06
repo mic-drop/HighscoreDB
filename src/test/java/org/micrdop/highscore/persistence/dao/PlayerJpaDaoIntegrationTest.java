@@ -19,7 +19,6 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         jpaPlayerDao.setSm(sm);
     }
 
-
     @Test
     public void findById(){
 

@@ -31,17 +31,22 @@ public class GameService {
         }
     }
 
-    public void addGame(String gameName){
+    public Integer addGame(String gameName){
+
+        Integer id = null;
+
       try{
           tx.beginWrite();
           Game game = new Game();
           game.setGameName(gameName);
-          jpaGameDao.saveOrUpdate(game);
+          id = jpaGameDao.saveOrUpdate(game).getId();
           tx.commit();
       } catch (PersistenceException e) {
           System.out.println(e.getMessage());
           tx.rollback();
       }
+
+      return id;
     }
 
     public void removeGame(Integer id){
