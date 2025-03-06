@@ -1,7 +1,6 @@
 package org.micdrop.highscore.dao.jpa;
 
 import org.micdrop.highscore.model.Game;
-import org.micdrop.highscore.model.Player;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

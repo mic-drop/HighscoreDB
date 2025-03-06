@@ -21,17 +21,21 @@ public class PlayerService {
         this.tx = tx;
     }
 
-    public void addPlayer(String name) {
+    public Integer addPlayer(String name) {
+
+        Integer id = null;
         Player player = new Player();
         player.setPlayerName(name);
+
         try {
             tx.beginWrite();
-            jpaPlayerDao.saveOrUpdate(player);
+            id = jpaPlayerDao.saveOrUpdate(player).getId();
             tx.commit();
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
             tx.rollback();
         }
+        return id;
     }
 
     public Player getPlayer(Integer id) {

@@ -3,7 +3,6 @@ package org.micrdop.highscore.persistence.dao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
 
 import org.micdrop.highscore.dao.jpa.JpaGameDao;
 import org.micdrop.highscore.model.Game;
