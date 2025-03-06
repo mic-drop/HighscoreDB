@@ -77,14 +77,25 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void delete(){
+    public void deletePlayerNoScore(){
         int id = 3;
 
         tx.beginWrite();
         jpaPlayerDao.delete(id);
         tx.commit();
 
-        Assert.assertNull("game should be null",sm.getCurrentSession().find(Player.class, id));
+        Assert.assertNull("player should be null",sm.getCurrentSession().find(Player.class, id));
+    }
+
+    @Test
+    public void deletePlayerWithScore(){
+        int id = 1;
+
+        tx.beginWrite();
+        jpaPlayerDao.delete(id);
+        tx.commit();
+
+        Assert.assertNull("player should be null",sm.getCurrentSession().find(Player.class, id));
     }
 
 }
