@@ -21,7 +21,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void findById(){
+    public void findById() {
 
         int id = 1;
 
@@ -34,7 +34,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void findByName(){
+    public void findByName() {
 
         String testName = "Snake";
 
@@ -47,7 +47,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void findAll(){
+    public void findAll() {
 
         List<Game> testList;
         //Change this value according to resources/db/test-data.sql
@@ -64,11 +64,13 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void saveOrUpdate(){
+    public void saveOrUpdate() {
         Game testGame = new Game();
         testGame.setGameName("Elden Wing");
 
+        em.getTransaction().begin();
         testGame = jpaGameDao.saveOrUpdate(testGame);
+        em.getTransaction().commit();
 
         Assert.assertNotNull(testGame.getId());
         Assert.assertEquals(3, testGame.getId().intValue());
@@ -76,11 +78,13 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void delete(){
-       int id = 1;
+    public void delete() {
+        int id = 1;
 
-       jpaGameDao.delete(id);
+        em.getTransaction().begin();
+        jpaGameDao.delete(id);
+        em.getTransaction().commit();
 
-       Assert.assertNull("game should be null", em.find(Game.class, id));
+        Assert.assertNull("game should be null", em.find(Game.class, id));
     }
 }
