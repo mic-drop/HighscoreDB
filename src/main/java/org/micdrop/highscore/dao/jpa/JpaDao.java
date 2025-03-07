@@ -3,15 +3,18 @@ package org.micdrop.highscore.dao.jpa;
 import org.micdrop.highscore.dao.Dao;
 import org.micdrop.highscore.model.AbstractModel;
 import org.micdrop.highscore.persistence.JpaSessionManager;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
+@Repository
 public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
 
     protected Class<T> modelType;
+
     protected EntityManager em;
 
     public JpaDao(Class<T> modelType) {
@@ -29,6 +32,10 @@ public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
     @PersistenceContext
     public void setEm(EntityManager em) {
         this.em = em;
+    }
+
+    public EntityManager getEm() {
+        return em;
     }
 
     @Override
@@ -51,7 +58,7 @@ public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
         try {
             em.remove(findById(id));
         } catch (PersistenceException e) {
-            throw e;
+            System.out.println(e.getMessage());
         }
     }
 }

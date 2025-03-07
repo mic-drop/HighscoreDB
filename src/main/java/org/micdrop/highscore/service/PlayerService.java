@@ -2,11 +2,8 @@ package org.micdrop.highscore.service;
 
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.model.Player;
-import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceException;
 import java.util.Optional;
 
 public class PlayerService {
@@ -20,7 +17,6 @@ public class PlayerService {
     @Transactional
     public Integer addPlayer(String name) {
 
-        Integer id = null;
         Player player = new Player();
         player.setPlayerName(name);
 

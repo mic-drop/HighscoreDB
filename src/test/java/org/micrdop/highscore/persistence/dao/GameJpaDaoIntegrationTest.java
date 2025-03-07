@@ -84,6 +84,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         em.getTransaction().begin();
         jpaGameDao.delete(id);
         em.getTransaction().commit();
+        em.clear();
 
         Assert.assertNull("game should be null", em.find(Game.class, id));
     }

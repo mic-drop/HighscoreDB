@@ -42,7 +42,7 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         List<Score> testList = jpaScoreDao.findAll();
 
         Assert.assertFalse(testList.isEmpty());
-        Assert.assertEquals(1, testList.size());
+        Assert.assertEquals(2, testList.size());
         Assert.assertEquals(90000, testList.get(0).getScore().intValue());
         Assert.assertEquals(1, testList.get(0).getId().intValue());
         Assert.assertEquals("Mic", testList.get(0).getPlayer().getPlayerName());
@@ -50,6 +50,7 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
 
     @Test
     public void testSaveUpdate() {
+        //setup
         JpaGameDao jpaGameDao = new JpaGameDao();
         JpaPlayerDao jpaPlayerDao = new JpaPlayerDao();
         jpaGameDao.setEm(em);
@@ -65,14 +66,33 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         score.setPlayer(player);
         score.setDate(LocalDateTime.now());
 
+        //exercise
         em.getTransaction().begin();
         int id = jpaScoreDao.saveOrUpdate(score).getId();
         em.getTransaction().commit();
 
+        //verify
         Assert.assertNotNull(jpaScoreDao.findById(id));
         Assert.assertEquals("id game should be the same", fakeId, score.getGame().getId().intValue());
         Assert.assertEquals("player id should be the same", fakeId, score.getPlayer().getId().intValue());
     }
 
+    @Test
+    public void testDelete(){
+        //setup
+        //check test-data seeds
+        int deleteId = 2;
+
+        //exercise
+        em.getTransaction().begin();
+        jpaScoreDao.delete(deleteId);
+        em.getTransaction().commit();
+        em.clear();
+
+        Score score = em.find(Score.class, deleteId);
+
+        //verify
+        Assert.assertNull(score);
+    }
 
 }
