@@ -9,6 +9,7 @@ public class JpaSessionManager {
     private EntityManagerFactory emf;
     private EntityManager em;
 
+    @PersistenceUnit
     public void setEmf(EntityManagerFactory emf) {
         this.emf = emf;
     }

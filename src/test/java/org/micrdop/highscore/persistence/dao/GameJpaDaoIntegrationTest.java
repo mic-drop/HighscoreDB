@@ -17,7 +17,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void setup() {
 
         jpaGameDao = new JpaGameDao();
-        jpaGameDao.setSm(sm);
+        jpaGameDao.setEm(em);
     }
 
     @Test
@@ -68,9 +68,7 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         Game testGame = new Game();
         testGame.setGameName("Elden Wing");
 
-        tx.beginWrite();
         testGame = jpaGameDao.saveOrUpdate(testGame);
-        tx.commit();
 
         Assert.assertNotNull(testGame.getId());
         Assert.assertEquals(3, testGame.getId().intValue());
@@ -81,10 +79,8 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     public void delete(){
        int id = 1;
 
-       tx.beginWrite();
        jpaGameDao.delete(id);
-       tx.commit();
 
-       Assert.assertNull("game should be null",sm.getCurrentSession().find(Game.class, id));
+       Assert.assertNull("game should be null", em.find(Game.class, id));
     }
 }

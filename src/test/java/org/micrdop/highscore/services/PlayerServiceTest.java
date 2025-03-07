@@ -17,17 +17,14 @@ public class PlayerServiceTest {
 
 
     private PlayerService playerService;
-    private JpaTransactionManager tx;
     private JpaPlayerDao jpaPlayerDao;
 
     @Before
     public void setup() {
-        tx = mock(JpaTransactionManager.class);
         jpaPlayerDao = mock(JpaPlayerDao.class);
 
         playerService = new PlayerService();
         playerService.setJpaPlayerDao(jpaPlayerDao);
-        playerService.setTx(tx);
     }
 
     @Test
@@ -42,8 +39,6 @@ public class PlayerServiceTest {
         Player testPlayer = playerService.getPlayer(fakeId);
 
         //verify
-        verify(tx, times(1)).beginRead();
-        verify(tx, times(1)).commit();
         assertEquals(fakePlayer, testPlayer);
 
     }
@@ -60,8 +55,6 @@ public class PlayerServiceTest {
         Player testPlayer = playerService.getPlayerByName(playerName);
 
         //verify
-        verify(tx, times(1)).beginRead();
-        verify(tx, times(1)).commit();
         assertEquals(fakePlayer, testPlayer);
     }
 
@@ -78,9 +71,6 @@ public class PlayerServiceTest {
         int id = playerService.addPlayer("Not in Seeds");
 
         //verify
-        verify(tx, times(1)).beginWrite();
-        verify(tx, times(1)).commit();
-        verify(tx, never()).rollback();
         assertEquals(fakeId, id);
     }
 
@@ -93,8 +83,6 @@ public class PlayerServiceTest {
         playerService.remove(fakeId);
 
         //verify
-        verify(tx, times(1)).beginWrite();
-        verify(tx, times(1)).commit();
-        verify(tx, never()).rollback();
+        verify(jpaPlayerDao, times(1)).delete(fakeId);
     }
 }

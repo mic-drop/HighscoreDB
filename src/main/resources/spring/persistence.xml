@@ -12,19 +12,13 @@
         <property name="emf" ref="emFactory"/>
     </bean>
 
-    <bean id="transactionManager" class="org.micdrop.highscore.persistence.JpaTransactionManager">
-        <property name="sm" ref="sessionManager"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emFactory"/>
     </bean>
 
-    <bean id="playerDao" class="org.micdrop.highscore.dao.jpa.JpaPlayerDao">
-        <property name="sm" ref="sessionManager"/>
-    </bean>
+    <bean id="playerDao" class="org.micdrop.highscore.dao.jpa.JpaPlayerDao"/>
 
-    <bean id="gameDao" class="org.micdrop.highscore.dao.jpa.JpaGameDao">
-        <property name="sm" ref="sessionManager"/>
-    </bean>
+    <bean id="gameDao" class="org.micdrop.highscore.dao.jpa.JpaGameDao"/>
 
-    <bean id="scoreDao" class="org.micdrop.highscore.dao.jpa.JpaScoreDao">
-        <property name="sm" ref="sessionManager"/>
-    </bean>
+    <bean id="scoreDao" class="org.micdrop.highscore.dao.jpa.JpaScoreDao"/>
 </beans>

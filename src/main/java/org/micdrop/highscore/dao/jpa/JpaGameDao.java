@@ -14,14 +14,14 @@ public class JpaGameDao extends JpaDao<Game>{
 
     public Game findGameByName(String name){
 
-        CriteriaBuilder builder = sm.getCurrentSession().getCriteriaBuilder();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Game> query = builder.createQuery(Game.class);
         Root<Game> root = query.from(Game.class);
 
         query.select(root)
                 .where(builder.equal(root.get("gameName"), name));
 
-        return sm.getCurrentSession().createQuery(query).getSingleResult();
+        return em.createQuery(query).getSingleResult();
 
     }
 }

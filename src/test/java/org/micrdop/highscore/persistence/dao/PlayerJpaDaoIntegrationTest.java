@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.model.Player;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     private JpaPlayerDao jpaPlayerDao;
 
     @Before
-    public void setup(){
+    public void setup() {
         jpaPlayerDao = new JpaPlayerDao();
-        jpaPlayerDao.setSm(sm);
+        jpaPlayerDao.setEm(em);
     }
 
     @Test
-    public void findById(){
+    public void findById() {
 
         int id = 1;
 
@@ -33,7 +34,7 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void findByName(){
+    public void findByName() {
 
         String testName = "Mic";
 
@@ -46,7 +47,7 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void findAll(){
+    public void findAll() {
 
         List<Player> testList;
         //Change this value according to resources/db/test-data.sql
@@ -63,13 +64,14 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void saveOrUpdate(){
+    public void saveOrUpdate() {
         Player testPlayer = new Player();
         testPlayer.setPlayerName("New player");
 
-        tx.beginWrite();
+        em.getTransaction().begin();
         testPlayer = jpaPlayerDao.saveOrUpdate(testPlayer);
-        tx.commit();
+        em.getTransaction().commit();
+
 
         Assert.assertNotNull(testPlayer.getId());
         Assert.assertEquals(4, testPlayer.getId().intValue());
@@ -77,25 +79,23 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void deletePlayerNoScore(){
+    public void deletePlayerNoScore() {
         int id = 3;
 
-        tx.beginWrite();
+        em.getTransaction().begin();
         jpaPlayerDao.delete(id);
-        tx.commit();
+        em.getTransaction().commit();
 
-        Assert.assertNull("player should be null",sm.getCurrentSession().find(Player.class, id));
+        Assert.assertNull("player should be null", em.find(Player.class, id));
     }
 
     @Test
-    public void deletePlayerWithScore(){
+    public void deletePlayerWithScore() {
         int id = 1;
 
-        tx.beginWrite();
         jpaPlayerDao.delete(id);
-        tx.commit();
 
-        Assert.assertNull("player should be null",sm.getCurrentSession().find(Player.class, id));
+        Assert.assertNull("player should be null", em.find(Player.class, id));
     }
 
 }

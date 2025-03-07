@@ -4,17 +4,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="playerService" class="org.micdrop.highscore.service.PlayerService">
-        <property name="tx" ref="transactionManager"/>
         <property name="jpaPlayerDao" ref="playerDao"/>
     </bean>
 
     <bean id="gameService" class="org.micdrop.highscore.service.GameService">
-        <property name="tx" ref="transactionManager"/>
         <property name="jpaGameDao" ref="gameDao"/>
     </bean>
 
     <bean id="scoreService" class="org.micdrop.highscore.service.ScoreService">
-        <property name="tx" ref="transactionManager"/>
         <property name="jpaGameDao" ref="gameDao"/>
         <property name="jpaPlayerDao" ref="playerDao"/>
         <property name="jpaScoreDao" ref="scoreDao"/>

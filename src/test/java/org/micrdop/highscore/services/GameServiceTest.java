@@ -15,17 +15,14 @@ import static org.mockito.Mockito.*;
 public class GameServiceTest {
 
     private GameService gameService;
-    private JpaTransactionManager tx;
     private JpaGameDao jpaGameDao;
 
     @Before
     public void setup() {
-        tx = mock(JpaTransactionManager.class);
         jpaGameDao = mock(JpaGameDao.class);
 
         gameService = new GameService();
         gameService.setJpaGameDao(jpaGameDao);
-        gameService.setTx(tx);
     }
 
     @Test
@@ -40,8 +37,6 @@ public class GameServiceTest {
         Game testGame = gameService.getGame(fakeId);
 
         //verify
-        verify(tx, times(1)).beginRead();
-        verify(tx, times(1)).commit();
         assertEquals(fakeGame, testGame);
 
     }
@@ -58,8 +53,6 @@ public class GameServiceTest {
         Game testGame = gameService.getGameByName(gameName);
 
         //verify
-        verify(tx, times(1)).beginRead();
-        verify(tx, times(1)).commit();
         assertEquals(fakeGame, testGame);
     }
 
@@ -76,9 +69,6 @@ public class GameServiceTest {
         int id = gameService.addGame("Not in Seeds");
 
         //verify
-        verify(tx, times(1)).beginWrite();
-        verify(tx, times(1)).commit();
-        verify(tx, never()).rollback();
         assertEquals(fakeId, id);
     }
 
@@ -91,8 +81,6 @@ public class GameServiceTest {
         gameService.removeGame(fakeId);
 
         //verify
-        verify(tx, times(1)).beginWrite();
-        verify(tx, times(1)).commit();
-        verify(tx, never()).rollback();
+        verify(jpaGameDao, times(1)).delete(fakeId);
     }
 }

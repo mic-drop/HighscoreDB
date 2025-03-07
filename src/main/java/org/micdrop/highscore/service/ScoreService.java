@@ -7,6 +7,7 @@ import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.model.Player;
 import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
 import java.util.Optional;
@@ -17,21 +18,15 @@ public class ScoreService {
     private JpaPlayerDao jpaPlayerDao;
     private JpaGameDao jpaGameDao;
 
-    private JpaTransactionManager tx;
 
-    public Score get(Integer id){
+    public Score get(Integer id) {
 
-        try {
-            tx.beginRead();
-            Score score = jpaScoreDao.findById(id);
+        Score score = jpaScoreDao.findById(id);
 
-            return Optional.ofNullable(score).orElseThrow(() -> new IllegalArgumentException("score not found"));
-        } finally {
-            tx.commit();
-        }
+        return Optional.ofNullable(score).orElseThrow(() -> new IllegalArgumentException("score not found"));
     }
 
-
+    @Transactional
     public void addScore(int scoreValue, String username, String gameName) {
 
 
@@ -47,14 +42,7 @@ public class ScoreService {
         }
 
         Score newScore = new Score(player, game, scoreValue);
-        try {
-            tx.beginWrite();
-            jpaScoreDao.saveOrUpdate(newScore);
-            tx.commit();
-        } catch (PersistenceException exception) {
-            System.out.println(exception.getMessage());
-            tx.rollback();
-        }
+        jpaScoreDao.saveOrUpdate(newScore);
 
     }
 
@@ -70,7 +58,4 @@ public class ScoreService {
         this.jpaGameDao = jpaGameDao;
     }
 
-    public void setTx(JpaTransactionManager tx) {
-        this.tx = tx;
-    }
 }

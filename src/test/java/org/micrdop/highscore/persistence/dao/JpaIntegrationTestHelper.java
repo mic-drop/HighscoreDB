@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.micdrop.highscore.persistence.JpaSessionManager;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.springframework.context.support.GenericXmlApplicationContext;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 
@@ -12,8 +14,7 @@ public class JpaIntegrationTestHelper {
 
     protected GenericXmlApplicationContext ctx;
     protected EntityManagerFactory emf;
-    protected JpaSessionManager sm;
-    protected JpaTransactionManager tx;
+    protected EntityManager em;
 
     @Before
     public void init() {
@@ -26,24 +27,17 @@ public class JpaIntegrationTestHelper {
 
 
         emf = ctx.getBean(EntityManagerFactory.class);
+        em = emf.createEntityManager();
 
-        sm = new JpaSessionManager();
-        tx = new JpaTransactionManager();
-
-        sm.setEmf(emf);
-        tx.setSm(sm);
-
-        tx.beginRead();
     }
 
 
     @After
     public void tearDown() {
 
-        try {
-            tx.commit();
-        } catch (PersistenceException e) {
-            tx.rollback();
+        if(em != null) {
+            em.clear();
+            em.close();
         }
 
         if (emf != null) {

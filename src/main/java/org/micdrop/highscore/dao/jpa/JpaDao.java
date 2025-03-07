@@ -4,13 +4,15 @@ import org.micdrop.highscore.dao.Dao;
 import org.micdrop.highscore.model.AbstractModel;
 import org.micdrop.highscore.persistence.JpaSessionManager;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
 public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
 
     protected Class<T> modelType;
-    protected JpaSessionManager sm;
+    protected EntityManager em;
 
     public JpaDao(Class<T> modelType) {
         this.modelType = modelType;
@@ -24,33 +26,30 @@ public abstract class JpaDao<T extends AbstractModel> implements Dao<T> {
         this.modelType = modelType;
     }
 
-    public JpaSessionManager getSm() {
-        return sm;
-    }
-
-    public void setSm(JpaSessionManager sm) {
-        this.sm = sm;
+    @PersistenceContext
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 
     @Override
     public List<T> findAll() {
-        return sm.getCurrentSession().createQuery("from " + modelType.getCanonicalName(), modelType).getResultList();
+        return em.createQuery("from " + modelType.getCanonicalName(), modelType).getResultList();
     }
 
     @Override
     public T findById(Integer id) {
-        return sm.getCurrentSession().find(modelType, id);
+        return em.find(modelType, id);
     }
 
     @Override
     public T saveOrUpdate(T model) throws PersistenceException {
-        return sm.getCurrentSession().merge(model);
+        return em.merge(model);
     }
 
     @Override
     public void delete(Integer id) {
         try {
-            sm.getCurrentSession().remove(findById(id));
+            em.remove(findById(id));
         } catch (PersistenceException e) {
             throw e;
         }

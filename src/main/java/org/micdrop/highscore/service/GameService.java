@@ -3,69 +3,39 @@ package org.micdrop.highscore.service;
 import org.micdrop.highscore.dao.jpa.JpaGameDao;
 import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
 import java.util.Optional;
 
 public class GameService {
-    private JpaTransactionManager tx;
     private JpaGameDao jpaGameDao;
 
-    public Game getGame(Integer id){
-        try {
-            tx.beginRead();
-            Game game = jpaGameDao.findById(id);
-            return Optional.ofNullable(game).orElseThrow(() -> new IllegalArgumentException("game not found"));
-        } finally {
-            tx.commit();
-        }
+    public Game getGame(Integer id) {
+        Game game = jpaGameDao.findById(id);
+        return Optional.ofNullable(game).orElseThrow(() -> new IllegalArgumentException("game not found"));
     }
 
-    public Game getGameByName(String gameName){
-        try {
-            tx.beginRead();
-            Game game = jpaGameDao.findGameByName(gameName);
-            return Optional.ofNullable(game).orElseThrow(() -> new IllegalArgumentException("game name not found"));
-        } finally {
-            tx.commit();
-        }
+    public Game getGameByName(String gameName) {
+        Game game = jpaGameDao.findGameByName(gameName);
+        return Optional.ofNullable(game).orElseThrow(() -> new IllegalArgumentException("game name not found"));
     }
 
-    public Integer addGame(String gameName){
+    @Transactional
+    public Integer addGame(String gameName) {
 
         Integer id = null;
 
-      try{
-          tx.beginWrite();
-          Game game = new Game();
-          game.setGameName(gameName);
-          id = jpaGameDao.saveOrUpdate(game).getId();
-          tx.commit();
-      } catch (PersistenceException e) {
-          System.out.println(e.getMessage());
-          tx.rollback();
-      }
+        Game game = new Game();
+        game.setGameName(gameName);
+        id = jpaGameDao.saveOrUpdate(game).getId();
 
-      return id;
+        return id;
     }
 
-    public void removeGame(Integer id){
-       try {
-           tx.beginWrite();
-           jpaGameDao.delete(id);
-           tx.commit();
-       } catch (PersistenceException e) {
-           System.out.println(e.getMessage());
-           tx.rollback();
-       }
-    }
-
-    public JpaTransactionManager getTx() {
-        return tx;
-    }
-
-    public void setTx(JpaTransactionManager tx) {
-        this.tx = tx;
+    @Transactional
+    public void removeGame(Integer id) {
+        jpaGameDao.delete(id);
     }
 
     public JpaGameDao getJpaGameDao() {

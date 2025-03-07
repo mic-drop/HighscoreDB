@@ -15,7 +15,7 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper{
     @Before
     public void setup(){
         jpaScoreDao = new JpaScoreDao();
-        jpaScoreDao.setSm(sm);
+        jpaScoreDao.setEm(em);
     }
 
     @Test

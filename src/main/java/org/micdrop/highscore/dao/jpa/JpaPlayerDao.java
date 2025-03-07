@@ -14,13 +14,13 @@ public class JpaPlayerDao extends JpaDao<Player> {
     }
 
     public Player findByName(String name) throws PersistenceException {
-        CriteriaBuilder builder = sm.getCurrentSession().getCriteriaBuilder();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Player> query = builder.createQuery(Player.class);
         Root<Player> root = query.from(Player.class);
 
         query.select(root)
                 .where(builder.equal(root.get("playerName"), name));
 
-        return sm.getCurrentSession().createQuery(query).getSingleResult();
+        return em.createQuery(query).getSingleResult();
     }
 }
