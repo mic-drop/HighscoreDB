@@ -29,7 +29,7 @@
                 <!-- Uncomment for debug -->
                 <entry key="hibernate.show_sql" value="true" />
 
-                <entry key="hibernate.dialect" value="org.micdrop.highscore.CustomH2Dialect"/>
+                <entry key="hibernate.dialect" value="org.micdrop.highscore.dialect.CustomH2Dialect"/>
 
                 <!-- Create database schema and populate with test data -->
                 <entry key="hibernate.hbm2ddl.auto" value="create"/>

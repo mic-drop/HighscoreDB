@@ -39,7 +39,7 @@
         <property name="jpaProperties">
             <map>
                 <entry key="hibernate.show_sql" value="${prod.debug}"/>
-                <entry key="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+                <entry key="hibernate.dialect" value="org.micdrop.highscore.dialect.CustomMySql8Dialect"/>
 
                 <!-- Insert test data if dev.schema.auto property set to create -->
                 <entry key="hibernate.hbm2ddl.import_files" value="db/data.sql"/>

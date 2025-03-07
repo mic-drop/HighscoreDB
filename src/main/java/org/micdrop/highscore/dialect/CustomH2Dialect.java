@@ -1,4 +1,4 @@
-package org.micdrop.highscore;
+package org.micdrop.highscore.dialect;
 
 //This class exist solely to allow orphan removal in H2 persistence units
 public class CustomH2Dialect extends org.hibernate.dialect.H2Dialect {

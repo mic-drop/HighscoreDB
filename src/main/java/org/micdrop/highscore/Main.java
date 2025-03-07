@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-        ctx.getEnvironment().setActiveProfiles("dev");
+        ctx.getEnvironment().setActiveProfiles("prod");
 
         ctx.load("/spring/spring-config.xml");
         ctx.refresh();
@@ -24,7 +24,6 @@ public class Main {
         try {
             Player player = playerService.getPlayer(1);
             System.out.println(player.getPlayerName());
-            playerService.remove(1);
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         }
