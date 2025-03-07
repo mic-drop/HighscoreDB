@@ -18,12 +18,13 @@ public class Main {
         ctx.load("/spring/spring-config.xml");
         ctx.refresh();
 
-        ScoreService scoreService = ctx.getBean("scoreService", ScoreService.class);
+        PlayerService playerService = ctx.getBean("playerService", PlayerService.class);
 
 
         try {
-            Score score = scoreService.get(1);
-            System.out.println(score.getDate());
+            Player player = playerService.getPlayer(1);
+            System.out.println(player.getPlayerName());
+            playerService.remove(1);
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         }
