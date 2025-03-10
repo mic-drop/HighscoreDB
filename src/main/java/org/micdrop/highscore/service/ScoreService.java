@@ -10,6 +10,7 @@ import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Optional;
 
 public class ScoreService {
@@ -27,7 +28,7 @@ public class ScoreService {
     }
 
     @Transactional
-    public void addScore(int scoreValue, String username, String gameName) {
+    public Integer addScore(int scoreValue, String username, String gameName) {
         Player player = jpaPlayerDao.findByName(username);
         if (player == null) {
             player = new Player(username);
@@ -40,8 +41,7 @@ public class ScoreService {
         }
 
         Score newScore = new Score(player, game, scoreValue);
-        jpaScoreDao.saveOrUpdate(newScore);
-
+        return jpaScoreDao.saveOrUpdate(newScore).getId();
     }
 
     @Transactional

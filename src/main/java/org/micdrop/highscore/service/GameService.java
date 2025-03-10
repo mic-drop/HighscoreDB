@@ -23,14 +23,10 @@ public class GameService {
 
     @Transactional
     public Integer addGame(String gameName) {
-
-        Integer id = null;
-
         Game game = new Game();
         game.setGameName(gameName);
-        id = jpaGameDao.saveOrUpdate(game).getId();
 
-        return id;
+        return jpaGameDao.saveOrUpdate(game).getId();
     }
 
     @Transactional
