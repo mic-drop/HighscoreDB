@@ -16,7 +16,7 @@ public class JpaScoreDao extends JpaDao<Score>{
     public void delete(Integer id) {
         try {
             Score deleteScore = findById(id);
-            deleteScore.getPlayer().getScores().clear();
+            deleteScore.getPlayer().getScores().remove(deleteScore);
             em.remove(deleteScore);
         } catch (PersistenceException ex)
         {
