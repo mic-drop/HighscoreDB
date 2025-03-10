@@ -14,6 +14,12 @@ public class Game extends AbstractModel{
     @OneToMany(mappedBy = "game", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Score> scores = new ArrayList<>();
 
+    public Game(){};
+
+    public Game(String gameName){
+        this.gameName = gameName;
+    }
+
     public String getGameName() {
         return gameName;
     }

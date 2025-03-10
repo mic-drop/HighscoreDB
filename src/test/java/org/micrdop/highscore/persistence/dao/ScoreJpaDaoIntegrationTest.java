@@ -3,7 +3,6 @@ package org.micrdop.highscore.persistence.dao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.notification.RunListener;
 import org.micdrop.highscore.dao.jpa.JpaGameDao;
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.dao.jpa.JpaScoreDao;
@@ -12,7 +11,6 @@ import org.micdrop.highscore.model.Player;
 import org.micdrop.highscore.model.Score;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
@@ -49,7 +47,7 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void testSaveUpdate() {
+    public void testSaveScoreWithPersistedDependencies() {
         //setup
         JpaGameDao jpaGameDao = new JpaGameDao();
         JpaPlayerDao jpaPlayerDao = new JpaPlayerDao();
@@ -78,7 +76,34 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
     }
 
     @Test
-    public void testDelete(){
+    public void testSaveScoreWithNewDependencies() {
+        Game game = new Game("AC 6");
+        Player player = new Player("621");
+        Score score = new Score(player, game, 999);
+        game.getScores().add(score);
+        player.getScores().add(score);
+
+        em.getTransaction().begin();
+
+        score.setPlayer(player);
+        score.setGame(game);
+
+        int id = jpaScoreDao.saveOrUpdate(score).getId();
+        em.getTransaction().commit();
+
+        Score persistedScore = jpaScoreDao.findById(id);
+        Assert.assertNotNull(persistedScore);
+        Assert.assertEquals(id, persistedScore.getId().intValue());
+
+        Assert.assertNotNull(persistedScore.getPlayer());
+        Assert.assertNotNull(persistedScore.getPlayer().getId());
+        Assert.assertNotNull(persistedScore.getGame());
+        Assert.assertNotNull(persistedScore.getGame().getId());
+
+    }
+
+    @Test
+    public void testDelete() {
         //setup
         //check test-data seeds
         int deleteId = 2;
