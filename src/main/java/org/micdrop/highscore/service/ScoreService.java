@@ -28,8 +28,6 @@ public class ScoreService {
 
     @Transactional
     public void addScore(int scoreValue, String username, String gameName) {
-
-
         Player player = jpaPlayerDao.findByName(username);
         if (player == null) {
             player = new Player(username);
@@ -45,6 +43,12 @@ public class ScoreService {
         jpaScoreDao.saveOrUpdate(newScore);
 
     }
+
+    @Transactional
+    public void deleteScore(int id){
+        jpaScoreDao.delete(id);
+    }
+
 
     public void setJpaScoreDao(JpaScoreDao jpaScoreDao) {
         this.jpaScoreDao = jpaScoreDao;
