@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
+import org.micdrop.highscore.dao.jpa.JpaScoreDao;
 import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.model.Player;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,13 +90,24 @@ public class PlayerJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         Assert.assertNull("player should be null", em.find(Player.class, id));
     }
 
+    /*Verifies orphan removal*/
     @Test
     public void deletePlayerWithScore() {
+        //setup
         int id = 1;
 
+        //exercise
+        em.getTransaction().begin();
         jpaPlayerDao.delete(id);
+        em.getTransaction().commit();
+
+        //verify
+        JpaScoreDao jpaScoreDao;
+        jpaScoreDao = new JpaScoreDao();
+        jpaScoreDao.setEm(em);
 
         Assert.assertNull("player should be null", em.find(Player.class, id));
+        Assert.assertEquals(0, jpaScoreDao.findAll().size());
     }
 
 }
