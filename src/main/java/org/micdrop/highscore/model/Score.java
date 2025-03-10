@@ -14,11 +14,13 @@ public class Score extends AbstractModel {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id", referencedColumnName = "id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_score_player"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Player player;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_score_game"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Game game;
 
     @Column(nullable = false)
