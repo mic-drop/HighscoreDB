@@ -13,8 +13,8 @@ public class Main {
         ctx.refresh();
 
         JpaScoreDao jpaScoreDao = ctx.getBean("scoreDao", JpaScoreDao.class);
-        if (jpaScoreDao.getEm() == null) {
-            System.out.println("Merda");
+        if (jpaScoreDao.getEm() != null) {
+            System.out.println("All good");
         }
 
     }

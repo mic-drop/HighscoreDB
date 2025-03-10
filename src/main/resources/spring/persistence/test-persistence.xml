@@ -27,7 +27,7 @@
             <map>
 
                 <!-- Uncomment for debug -->
-<!--                <entry key="hibernate.show_sql" value="true" />-->
+                <entry key="hibernate.show_sql" value="true" />
 
                 <entry key="hibernate.dialect" value="org.micdrop.highscore.dialect.CustomH2Dialect"/>
 

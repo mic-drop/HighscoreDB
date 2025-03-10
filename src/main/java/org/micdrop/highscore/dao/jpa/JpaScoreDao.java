@@ -2,11 +2,26 @@ package org.micdrop.highscore.dao.jpa;
 
 import org.micdrop.highscore.model.Score;
 
+import javax.persistence.PersistenceException;
+import java.util.List;
+import java.util.Objects;
+
 public class JpaScoreDao extends JpaDao<Score>{
 
     public JpaScoreDao() {
         super(Score.class);
     }
 
+    @Override
+    public void delete(Integer id) {
+        try {
+            Score deleteScore = findById(id);
+            deleteScore.getPlayer().getScores().clear();
+            em.remove(deleteScore);
+        } catch (PersistenceException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
 
+    }
 }

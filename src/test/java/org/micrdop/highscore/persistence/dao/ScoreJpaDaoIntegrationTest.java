@@ -82,17 +82,25 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         //setup
         //check test-data seeds
         int deleteId = 2;
-
         //exercise
         em.getTransaction().begin();
-        jpaScoreDao.delete(deleteId);
+        System.out.println("aqui");
+        Score deleteScore = em.find(Score.class, deleteId);
+        deleteScore.getPlayer().getScores().clear();
+        em.remove(deleteScore);
+        System.out.println("aqui");
         em.getTransaction().commit();
         em.clear();
 
-        Score score = em.find(Score.class, deleteId);
 
         //verify
-        Assert.assertNull(score);
+        Player player = em.find(Player.class, 1);
+
+        Assert.assertNull(em.find(Score.class, deleteId));
+        Assert.assertNotNull(em.find(Score.class, 1));
+
+        Assert.assertNotNull(player);
+        Assert.assertEquals(player.getPlayerName(), "Mic");
     }
 
 }

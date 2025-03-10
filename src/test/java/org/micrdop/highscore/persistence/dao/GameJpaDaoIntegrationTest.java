@@ -82,7 +82,9 @@ public class GameJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
         int id = 1;
 
         em.getTransaction().begin();
-        jpaGameDao.delete(id);
+        System.out.println("aqui");
+        jpaGameDao.delete(id); //same as em.remove(em.find(Game.class, id))
+        System.out.println("aqui");
         em.getTransaction().commit();
         em.clear();
 
