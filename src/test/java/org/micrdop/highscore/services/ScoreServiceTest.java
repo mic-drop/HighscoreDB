@@ -70,11 +70,15 @@ public class ScoreServiceTest {
         verify(jpaPlayerDao, times(1)).findByName(player);
         verify(jpaGameDao, times(1)).findGameByName(game);
         verify(jpaScoreDao, times(1)).saveOrUpdate(any(Score.class));
-
     }
 
     @Test
     public void testRemoveScore() {
+        int fakeId = 999;
+
+        scoreService.deleteScore(fakeId);
+
+        verify(jpaScoreDao, times(1)).delete(fakeId);
     }
 }
 
