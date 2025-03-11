@@ -110,6 +110,8 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
 
         //exercise
         em.getTransaction().begin();
+        Score score = jpaScoreDao.findById(deleteId);
+        score.getPlayer().getScores().remove(score);
         jpaScoreDao.delete(deleteId);
         em.getTransaction().commit();
 

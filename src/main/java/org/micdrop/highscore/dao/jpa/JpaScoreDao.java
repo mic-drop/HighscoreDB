@@ -15,7 +15,6 @@ public class JpaScoreDao extends JpaDao<Score>{
     @Override
     public void delete(Integer id) throws PersistenceException {
             Score deleteScore = findById(id);
-            deleteScore.getPlayer().getScores().remove(deleteScore);
             em.remove(deleteScore);
     }
 }
