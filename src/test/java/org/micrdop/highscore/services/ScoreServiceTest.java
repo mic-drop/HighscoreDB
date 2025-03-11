@@ -6,13 +6,17 @@ import org.junit.Test;
 import org.micdrop.highscore.dao.jpa.JpaGameDao;
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.dao.jpa.JpaScoreDao;
+import org.micdrop.highscore.model.Game;
+import org.micdrop.highscore.model.Player;
 import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.service.ScoreService;
 
 import javax.persistence.PersistenceException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ScoreServiceTest {
@@ -78,11 +82,27 @@ public class ScoreServiceTest {
 
     @Test
     public void testRemoveScore() {
+        //setup
         int fakeId = 999;
+        Player player = mock(Player.class);
+        Game game = mock(Game.class);
+        List<Score> playerScores = new ArrayList<>();
+        Score score = new Score(player, game, 999);
 
+        score.setId(fakeId);
+        playerScores.add(score);
+        player.setScores(playerScores);
+
+        when(jpaScoreDao.findById(fakeId)).thenReturn(score);
+        when(player.getScores()).thenReturn(playerScores);
+
+        //exercise
         scoreService.deleteScore(fakeId);
 
+        //verify
         verify(jpaScoreDao, times(1)).delete(fakeId);
+        verify(player, times(1)).getScores();
+        assertFalse("score should be removed from player's score", player.getScores().contains(score));
     }
 
     @Test

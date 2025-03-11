@@ -55,6 +55,8 @@ public class ScoreService {
     @Transactional
     public void deleteScore(int id) {
         try {
+            Score score = jpaScoreDao.findById(id);
+            score.getPlayer().getScores().remove(score);
             jpaScoreDao.delete(id);
         } catch (PersistenceException ex)
         {
