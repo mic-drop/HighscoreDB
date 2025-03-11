@@ -107,11 +107,20 @@ public class ScoreServiceTest {
 
     @Test
     public void testRemoveScoreNotFound(){
+        //setup
         int fakeId = 999;
+        Score testScore = mock(Score.class);
+        Player testPlayer = mock(Player.class);
+        List<Score> playerScores = mock(ArrayList.class);
+
+        when(jpaScoreDao.findById(fakeId)).thenReturn(testScore);
+        when(testScore.getPlayer()).thenReturn(testPlayer);
         doThrow(new PersistenceException("score not found")).when(jpaScoreDao).delete(fakeId);
 
+        //exercise
         scoreService.deleteScore(fakeId);
 
+        //verify
         verify(jpaScoreDao, times(1)).delete(fakeId);
     }
 }
