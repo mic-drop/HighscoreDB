@@ -54,7 +54,12 @@ public class ScoreService {
 
     @Transactional
     public void deleteScore(int id) {
-        jpaScoreDao.delete(id);
+        try {
+            jpaScoreDao.delete(id);
+        } catch (PersistenceException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void setJpaScoreDao(JpaScoreDao jpaScoreDao) {

@@ -9,6 +9,8 @@ import org.micdrop.highscore.dao.jpa.JpaScoreDao;
 import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.service.ScoreService;
 
+import javax.persistence.PersistenceException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -77,6 +79,16 @@ public class ScoreServiceTest {
     @Test
     public void testRemoveScore() {
         int fakeId = 999;
+
+        scoreService.deleteScore(fakeId);
+
+        verify(jpaScoreDao, times(1)).delete(fakeId);
+    }
+
+    @Test
+    public void testRemoveScoreNotFound(){
+        int fakeId = 999;
+        doThrow(new PersistenceException("score not found")).when(jpaScoreDao).delete(fakeId);
 
         scoreService.deleteScore(fakeId);
 
