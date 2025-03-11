@@ -77,24 +77,24 @@ public class ScoreJpaDaoIntegrationTest extends JpaIntegrationTestHelper {
 
     @Test
     public void testSaveScoreWithNewDependencies() {
+        //setup
         Game game = new Game("AC 6");
         Player player = new Player("621");
         Score score = new Score(player, game, 999);
         game.getScores().add(score);
         player.getScores().add(score);
 
+        //exercise
         em.getTransaction().begin();
-
         score.setPlayer(player);
         score.setGame(game);
-
         int id = jpaScoreDao.saveOrUpdate(score).getId();
         em.getTransaction().commit();
 
+        //verify
         Score persistedScore = jpaScoreDao.findById(id);
         Assert.assertNotNull(persistedScore);
         Assert.assertEquals(id, persistedScore.getId().intValue());
-
         Assert.assertNotNull(persistedScore.getPlayer());
         Assert.assertNotNull(persistedScore.getPlayer().getId());
         Assert.assertNotNull(persistedScore.getGame());

@@ -66,7 +66,9 @@ public class ScoreServiceTest {
 
         when(jpaScoreDao.saveOrUpdate(any(Score.class))).thenReturn(score);
 
-        scoreService.addScore(999, player, game);
+        int id = scoreService.addScore(999, player, game);
+
+        assertEquals(fakeId, id);
         verify(jpaPlayerDao, times(1)).findByName(player);
         verify(jpaGameDao, times(1)).findGameByName(game);
         verify(jpaScoreDao, times(1)).saveOrUpdate(any(Score.class));

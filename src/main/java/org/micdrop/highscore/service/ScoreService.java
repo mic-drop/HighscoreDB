@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ScoreService {
@@ -27,28 +29,33 @@ public class ScoreService {
         return Optional.ofNullable(score).orElseThrow(() -> new IllegalArgumentException("score not found"));
     }
 
+    public List<Score> getScoresByPlayer(String username) {
+
+        return Optional.ofNullable(jpaGameDao.findGameByName(username).getScores()).orElseThrow(() -> new IllegalArgumentException("player username not found"));
+    }
+
     @Transactional
     public Integer addScore(int scoreValue, String username, String gameName) {
+        Score newScore = new Score(scoreValue);
+
         Player player = jpaPlayerDao.findByName(username);
-        if (player == null) {
-            player = new Player(username);
-        }
+        player = player == null ? new Player(username) : player;
+        player.getScores().add(newScore);
 
         Game game = jpaGameDao.findGameByName(gameName);
-        if (game == null) {
-            game = new Game();
-            game.setGameName(gameName);
-        }
+        game = game == null ? new Game(gameName) : game;
+        game.getScores().add(newScore);
 
-        Score newScore = new Score(player, game, scoreValue);
+        newScore.setPlayer(player);
+        newScore.setGame(game);
+
         return jpaScoreDao.saveOrUpdate(newScore).getId();
     }
 
     @Transactional
-    public void deleteScore(int id){
+    public void deleteScore(int id) {
         jpaScoreDao.delete(id);
     }
-
 
     public void setJpaScoreDao(JpaScoreDao jpaScoreDao) {
         this.jpaScoreDao = jpaScoreDao;
