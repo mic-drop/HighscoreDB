@@ -54,14 +54,9 @@ public class ScoreService {
 
     @Transactional
     public void deleteScore(int id) {
-        try {
-            Score score = jpaScoreDao.findById(id);
+            Score score = Optional.ofNullable(get(id)).orElseThrow(() -> new IllegalArgumentException("score not found"));
             score.getPlayer().getScores().remove(score);
             jpaScoreDao.delete(id);
-        } catch (PersistenceException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
     }
 
     public void setJpaScoreDao(JpaScoreDao jpaScoreDao) {
