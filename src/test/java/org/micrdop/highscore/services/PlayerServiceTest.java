@@ -92,6 +92,7 @@ public class PlayerServiceTest {
 
     @Test
     public void testGetScores() {
+        //setup
         int fakeId = 999;
         Player player = mock(Player.class);
         List<Score> scoreList = mock(ArrayList.class);
@@ -100,11 +101,35 @@ public class PlayerServiceTest {
         when(player.getScores()).thenReturn(scoreList);
         when(scoreList.size()).thenReturn(1);
 
+        //exercise
         List<Score> returnList = playerService.getScores(fakeId);
 
+        //verify
         verify(jpaPlayerDao, times(1)).findById(fakeId);
         verify(player, times(1)).getScores();
         assertEquals(1, returnList.size());
+    }
 
+    @Test
+    public void testGetScoresByGameName(){
+        //setup
+        int fakeId = 999;
+        Player player = mock(Player.class);
+        List<Score> scores = new ArrayList<>();
+
+        scores.add(new Score(player, new Game("Snake"), 10));
+        scores.add(new Score(player, new Game("Pong"), 10));
+        scores.add(new Score(player, new Game("Snake"), 100));
+
+        when(jpaPlayerDao.findById(fakeId)).thenReturn(player);
+        when(player.getScores()).thenReturn(scores);
+
+        //exercise
+        List<Score> returnList = playerService.getScoresByGameName(fakeId, "Snake");
+
+        //verify
+        verify(jpaPlayerDao, times(1)).findById(fakeId);
+        verify(player, times(1)).getScores();
+        assertEquals(2, returnList.size());
     }
 }

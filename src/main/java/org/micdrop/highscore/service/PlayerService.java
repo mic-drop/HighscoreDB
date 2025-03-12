@@ -6,7 +6,9 @@ import org.micdrop.highscore.model.Score;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PlayerService {
 
@@ -43,5 +45,9 @@ public class PlayerService {
 
     public List<Score> getScores(Integer id){
         return getPlayer(id).getScores();
+    }
+
+    public List<Score> getScoresByGameName(Integer id, String gameName){
+        return getScores(id).stream().filter(score -> Objects.equals(score.getGame().getGameName(), gameName)).collect(Collectors.toList());
     }
 }
