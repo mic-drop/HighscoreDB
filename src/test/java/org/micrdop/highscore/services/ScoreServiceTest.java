@@ -117,6 +117,7 @@ public class ScoreServiceTest {
         verify(jpaScoreDao, never()).delete(fakeId);
         verify(any(Score.class), never()).getPlayer();
     }
+
 }
 
 

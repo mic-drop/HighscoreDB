@@ -5,8 +5,12 @@ import org.junit.Test;
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.model.Game;
 import org.micdrop.highscore.model.Player;
+import org.micdrop.highscore.model.Score;
 import org.micdrop.highscore.persistence.JpaTransactionManager;
 import org.micdrop.highscore.service.PlayerService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,7 +63,7 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void testAddPlayer(){
+    public void testAddPlayer() {
 
         //setup
         int fakeId = 999;
@@ -75,7 +79,7 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void testRemoveGame(){
+    public void testRemovePlayer() {
         //setup
         int fakeId = 999;
 
@@ -84,5 +88,23 @@ public class PlayerServiceTest {
 
         //verify
         verify(jpaPlayerDao, times(1)).delete(fakeId);
+    }
+
+    @Test
+    public void testGetScores() {
+        int fakeId = 999;
+        Player player = mock(Player.class);
+        List<Score> scoreList = mock(ArrayList.class);
+
+        when(jpaPlayerDao.findById(fakeId)).thenReturn(player);
+        when(player.getScores()).thenReturn(scoreList);
+        when(scoreList.size()).thenReturn(1);
+
+        List<Score> returnList = playerService.getScores(fakeId);
+
+        verify(jpaPlayerDao, times(1)).findById(fakeId);
+        verify(player, times(1)).getScores();
+        assertEquals(1, returnList.size());
+
     }
 }

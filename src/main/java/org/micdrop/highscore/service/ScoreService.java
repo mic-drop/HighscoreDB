@@ -29,11 +29,6 @@ public class ScoreService {
         return Optional.ofNullable(score).orElseThrow(() -> new IllegalArgumentException("score not found"));
     }
 
-    public List<Score> getScoresByPlayer(String username) {
-
-        return Optional.ofNullable(jpaGameDao.findGameByName(username).getScores()).orElseThrow(() -> new IllegalArgumentException("player username not found"));
-    }
-
     @Transactional
     public Integer addScore(int scoreValue, String username, String gameName) {
         Score newScore = new Score(scoreValue);

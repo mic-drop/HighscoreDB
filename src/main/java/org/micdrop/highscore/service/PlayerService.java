@@ -2,8 +2,10 @@ package org.micdrop.highscore.service;
 
 import org.micdrop.highscore.dao.jpa.JpaPlayerDao;
 import org.micdrop.highscore.model.Player;
+import org.micdrop.highscore.model.Score;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PlayerService {
@@ -37,5 +39,9 @@ public class PlayerService {
     public boolean remove(Integer id) {
         jpaPlayerDao.delete(id);
         return true;
+    }
+
+    public List<Score> getScores(Integer id){
+        return getPlayer(id).getScores();
     }
 }
